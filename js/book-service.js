@@ -1,5 +1,6 @@
 'use strict';
-const DB = 'booksDB';
+const DB = getUserId();
+const ALLDB = 'booksDB';
 const SORTBY = 'sortBy';
 
 var gBooks;
@@ -8,22 +9,29 @@ var gPageSize = 5;
 
 function _createBooks() {
     gBooks = [];
-    for (var i = 0; i < gPageSize; i++) {
-        gBooks.push({ id: makeId(), name: null, price: 0, imgUrl: null, rating: 0 });
+    for (var i = 0; i < 25; i++) {
+        addBook(makeLorem(1), getRandomIntInclusive(0, 1000), `img/${i % 10}.jpg`, makeLorem(100));
     }
     _saveBooks();
 }
 
 function _saveBooks() {
     saveToStorage(DB, gBooks);
+    if (isAdmin) _saveAllBooks(gBooks);
+}
+function _saveAllBooks(allBooksDb) {
+    saveToStorage(ALLDB, allBooksDb);
 }
 
 function _saveSort(sortBy) {
+    if (!sortBy) sortBy = 'idx';
     saveToStorage(SORTBY, sortBy);
 }
 
 function _getSortBy() {
-    return loadFromStorage(SORTBY);
+    var sortBy = loadFromStorage(SORTBY);
+    // if (!sortBy || sortBy === 'undefined') sortBy = 'name';
+    return sortBy;
 }
 
 function getPageInfo() {
@@ -31,7 +39,7 @@ function getPageInfo() {
 }
 
 function getBooks() {
-    var books = loadFromStorage(DB);
+    var books = isAdmin ? loadFromStorage(ALLDB) : loadFromStorage(DB);
     if (!books) _createBooks();
     else {
         gBooks = books;
@@ -54,15 +62,22 @@ function removeBook(bookId) {
     var bookIdx = gBooks.findIndex(function (book) {
         return bookId === book.id;
     });
+    var deletedIdx = bookIdx.idx;
+    gBooks.forEach(function (book) {
+        if (book.idx > deletedIdx) book.idx--;
+    });
     gBooks.splice(bookIdx, 1);
+
     _saveBooks();
     if (getPageInfo().totalBooks % gPageSize === 0) {
+        var totalPages = getPageInfo().totalBooks / gPageSize;
+        if (gPageIdx === totalPages) gPageIdx--;
         updatePagesNav();
-        gotoPage(0);
+        gotoPage(gPageIdx);
     }
 }
 
-function addBook(bookName, bookPrice, bookImg, bookId) {
+function addBook(bookName, bookPrice, bookImg, bookDesc, bookId) {
     if (bookId) {
         //update a book
         var bookIdx = gBooks.findIndex(function (book) {
@@ -71,20 +86,28 @@ function addBook(bookName, bookPrice, bookImg, bookId) {
         gBooks[bookIdx].name = bookName;
         gBooks[bookIdx].price = bookPrice;
         gBooks[bookIdx].imgUrl = bookImg;
+        gBooks[bookIdx].desc = bookDesc;
     } else {
         //add a book
         gBooks.unshift({
+            idx: 0,
             id: makeId(),
             name: bookName,
             price: bookPrice,
+            desc: bookDesc,
             imgUrl: bookImg,
             rating: 0,
         });
+        gBooks.forEach(function (book) {
+            book.idx++;
+        });
     }
-    _saveBooks();
+    setSortBy(gSortBy);
+    // _saveBooks();
     if (getPageInfo().totalBooks % gPageSize === 1) {
         updatePagesNav();
     }
+    _saveBooks();
 }
 
 function setBookRatings(bookId, step) {
@@ -102,6 +125,11 @@ function setBookRatings(bookId, step) {
 
 function setSortBy(sortBy) {
     switch (sortBy) {
+        case 'idx':
+            gBooks.sort(function (a, b) {
+                return a.idx - b.idx;
+            });
+            break;
         case 'id':
             gBooks.sort(function (a, b) {
                 if (a.id > b.id) return 1;
@@ -131,5 +159,6 @@ function setSortBy(sortBy) {
             break;
     }
     _saveBooks();
-    _saveSort(gSortBy);
+    if (isAdmin) _saveAllBooks(gBooks);
+    _saveSort(sortBy);
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Titillium+Web:wght@200;400;700&family=Ubuntu:wght@700&display=swap"
+            rel="stylesheet"
+        />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://storage.googleapis.com/non-spec-apps/mio-icons/latest/outline.css"
+        />
+        <link rel="stylesheet" href="css/member.css" />
+        <title>Book Shop</title>
+    </head>
+
+    <body onload="onInit()">
+        <header>
+            <h1>Reader</h1>
+            <h2>read & enjoy...</h2>
+        </header>
+        <nav class="right">
+            <button onclick="onAddBook()">Add a book</button>
+            <button class="admin-btn" onclick="onClearStorage()">Clear all storage</button>
+            <button onclick="logout()">Logout</button>
+        </nav>
+        <div class="main">
+            <table>
+                <thead>
+                    <td class="clickable" onclick="onSort('idx')"><i data="idx" class="material-icons-new outline-sort hidden"></i>#</td>
+                    <td class="clickable" onclick="onSort('id')"><i data="id" class="material-icons-new outline-sort hidden"></i>ID</td>
+                    <td class="clickable" onclick="onSort('name')"><i data="name" class="material-icons-new outline-sort hidden"></i>Name</td>
+                    <td class="clickable" onclick="onSort('price')"><i data="price" class="material-icons-new outline-sort hidden"></i>Price</td>
+                    <td name="action-col" class="narrow" colspan="1"><i class="material-icons-new outline-sort hidden"></i>Actions</td>
+                    <td class="clickable" onclick="onSort('ratings')"><i data="ratings" class="material-icons-new outline-sort hidden"></i>Ratings</td>
+                </thead>
+                <tbody class="books-table"></tbody>
+            </table>
+        </div>
+
+        <div class="main-screen-modal">
+        <div class="modal add-new-book">
+            <h4>Add a new book</h4>
+            <div class="right">
+            <label>Book name:</label><input type="text" name="book-name" placeholder="Type book name here..."><br>
+            <label>Price:</label><input type="number" name="book-price" placeholder="Price"><br>
+            <label>Description:</label><input type="text" name="book-desc" placeholder="Book description"><br>
+            <label>Image URL:</label><input type="url" name="book-img" placeholder="Type image URL or path">
+            </div>
+            <h6 class="wrong-input">Wrong inputs. try again...</h6>
+            <button class="cancel" onclick="onCancelAddBook()">Cancel</button>
+            <button class="ok" onclick="onAddBook()">Add this book</button>
+        </div>
+        </div>
+        <div class="read-screen-modal">
+        <div class="modal read-book"  onselectstart="return false;">
+            <h4>Book details</h4>
+            <div class="book-details">
+            
+            </div>
+            <button class="ok" onclick="onCloseReadBook()">Close</button>
+        </div>
+        </div>
+        <footer onselectstart="return false;">
+            <nav>
+                <i class="material-icons-new outline-first_page" onclick="gotoPage('first')"></i>
+                <i class="material-icons-new outline-navigate_before" onclick="gotoPage('prev')"></i>
+                <span class="pages-nav"></span>
+            </span>
+                <i class="material-icons-new outline-navigate_next" onclick="gotoPage('next')"></i>
+                <i class="material-icons-new outline-last_page" onclick="gotoPage('last')"></i>
+            </nav>
+        </footer>
+        <script src="js/utils.js"></script>
+        <script src="js/storage-service.js"></script>
+        <script src="js/admin-service.js"></script>
+        <script src="js/user.service.js"></script>
+        <script src="js/user.controller.js"></script>
+        <script src="js/book-service.js"></script>
+        <script src="js/book-controller.js"></script>
+    </body>
+</html>

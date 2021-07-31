@@ -4,11 +4,14 @@ function renderPagesNav(items, itemsPerPage) {
     var totalPages = Math.ceil(items / itemsPerPage);
     //<i class="material-icons-new outline-looks_6"></i>
     var htmlSTR = '';
-    if (totalPages > 5) {
+    if (totalPages > 6) {
         for (var i = 0; i < totalPages; i++) {
-            htmlSTR += `<span class="page-num-nav" onclick="gotoPage(${i})">${i + 1}</span>`;
+            htmlSTR += `<span class="page-num-nav material-icons-new" onclick="gotoPage(${i})">${
+                i + 1
+            }</span>`;
         }
     } else {
+        totalPages = totalPages === 0 ? 1 : totalPages;
         for (var i = 0; i < totalPages; i++) {
             switch (i) {
                 case 0:

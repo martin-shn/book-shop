@@ -1,0 +1,248 @@
+body {
+    font-family: 'Titillium Web', sans-serif;
+    text-align: center;
+    background-color: bisque;
+}
+
+.material-icons-new {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+.material-icons-new:hover {
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+header {
+    background-color: darksalmon;
+    margin: 0;
+    padding: 10px;
+}
+h1 {
+    font-family: 'Ubuntu', sans-serif;
+    margin-bottom: 0px;
+}
+h2 {
+    font-family: 'Dancing Script', cursive;
+    margin-top: 0px;
+}
+
+nav {
+    background-color: burlywood;
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+}
+
+nav button {
+    padding: 8px;
+    cursor: pointer;
+    background-color: darksalmon;
+    box-shadow: 0px 0px 10px black;
+    border: 0;
+    margin: 0 10px;
+    font-family: 'Titillium Web', sans-serif;
+}
+nav button:hover {
+    background-color: rgb(224, 161, 140);
+}
+.admin-btn {
+    display: none;
+}
+/* if more than 6 pages - use this */
+.page-num-nav {
+    /* padding: 0 5px; */
+    /* max-width: 10px; */
+    border: 2px solid black;
+    border-radius: 30%;
+}
+
+/* current page indicator */
+.on-page {
+    /* outline: 1px solid black; */
+    background-color: rgb(179, 114, 107);
+    border-radius: 30%;
+}
+
+.main {
+    min-height: 50vh;
+}
+
+table {
+    text-align: center;
+    margin: auto;
+    width: 95%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+tr:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+thead td {
+    padding: 5px;
+    font-weight: 600;
+    user-select: none;
+}
+.narrow {
+    width: 1%;
+    padding: 0 10px;
+    max-width: 1%;
+    /* width: auto; */
+    white-space: nowrap;
+}
+td.narrow div {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    text-align: center;
+}
+td.narrow i {
+    transform: translateY(5px);
+}
+.clickable {
+    cursor: pointer;
+}
+.hidden {
+    opacity: 0;
+}
+.books-table td {
+    border: 1px solid black;
+}
+.btn {
+    font-family: inherit;
+    border-radius: 3px;
+    border: 1px solid darkgrey;
+    cursor: pointer;
+    padding: 0px 10px;
+    margin: 0;
+}
+.btn:hover {
+    /* opacity: 0.7; */
+    box-shadow: 0px 0px 10px;
+    text-shadow: 0 0 0.5px black, 0 0 0.5px black;
+}
+.read {
+    background-color: lightskyblue;
+    margin: 0 10px;
+}
+.update {
+    background-color: rgb(197, 197, 107);
+    margin: 0 10px;
+}
+.delete {
+    background-color: lightcoral;
+    margin: 0 10px;
+}
+
+.main-screen-modal {
+    display: none;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.fade-out {
+    animation: fade-out 0.5s;
+}
+.fade-in {
+    animation: fade-in 0.5s;
+    animation-fill-mode: forwards;
+}
+.modal {
+    background-color: lightcyan;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    margin: 20px;
+}
+.modal button {
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 25px;
+}
+.right {
+    text-align: right;
+    white-space: nowrap;
+}
+.wrong-input {
+    margin: 0;
+    visibility: hidden;
+    color: red;
+}
+
+.modal input {
+    margin: 5px 10px;
+    padding: 5px 2px;
+}
+
+.ok {
+    background-color: lightgreen;
+}
+.cancel {
+    background-color: lightcoral;
+}
+
+.read-screen-modal {
+    display: none;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.read-book {
+    background-color: rgb(133, 203, 235);
+    width: 80%;
+}
+.read-book img {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    max-height: 150px;
+    max-width: 150px;
+}
+.book-ratings-in-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.book-ratings-in-modal div {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    text-align: center;
+    transform: translateY(-5px);
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
