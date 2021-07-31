@@ -5,7 +5,7 @@ function generateAllDb() {
     // removeFromStorage(getLoggedInUserId());
     var users = _loadUsers();
     for (var i = 0; i < users.length; i++) {
-        if (users[i].id === getLoggedInUserId()) continue;
+        // if (users[i].id === getLoggedInUserId()) continue;
         var userBooks = loadFromStorage(users[i].id);
         if (userBooks) mergedBooksDB = merge(userBooks, mergedBooksDB, 'id');
     }

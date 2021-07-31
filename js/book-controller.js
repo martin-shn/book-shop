@@ -21,7 +21,8 @@ function onInit() {
     if (currUser.isAdmin) {
         isAdmin = true;
         document.querySelector('.admin-btn').style.display = 'inline-block';
-        if (!loadFromStorage(ALLDB)) generateAllDb();
+        // if (!loadFromStorage(ALLDB))
+        generateAllDb();
         document.querySelector('[name="action-col"]').colSpan = '3';
     }
 
