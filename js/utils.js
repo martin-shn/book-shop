@@ -88,3 +88,45 @@ function getRandomIntInclusive(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
+
+function setLang(){
+    var dict = getDict();
+    var els = document.querySelectorAll('[data-dict]')
+
+    els.forEach(function (el) {
+        var txt = getTrans(el.dataset.dict)
+        if (el.nodeName === 'INPUT') {
+            el.setAttribute('placeholder', txt)
+        } else {
+            el.innerText = txt
+        }
+    })
+
+    // renderBooks();
+}
+
+function getTrans(transKey) {
+    var keyTrans = getDict(transKey);
+    if (!keyTrans) return 'UNKNOWN'
+
+    var txt = keyTrans[document.querySelector('[name="lang"]').value]
+    if (!txt) txt = keyTrans['en']
+
+    return txt;
+}
+
+function getLocale(){
+    return getDict('locale')[document.querySelector('[name="lang"]').value];
+}
+
+function getOptions(){
+    return getDict('options')[document.querySelector('[name="lang"]').value];
+}
+
+function saveLang(){
+    saveToStorage('lang',document.querySelector('[name="lang"]').value);
+}
+
+function getLang(){
+    return loadFromStorage('lang');
+}

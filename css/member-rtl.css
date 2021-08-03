@@ -1,0 +1,78 @@
+body.rtl {
+    font-family: 'Titillium Web', sans-serif;
+    text-align: center;
+    background-color: bisque;
+    direction: rtl;
+}
+
+body.rtl .langDropDown{
+    position:absolute;
+    /* top:0; */
+    /* left:-50%; */
+    right:20px;
+    /* transform: translateX(50%); */
+    padding: 8px;
+    cursor: pointer;
+    background-color: darksalmon;
+    box-shadow: 0px 0px 10px black;
+    border: 0;
+    margin: 0 10px;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+td.narrow i {
+    transform: translateY(5px);
+}
+
+
+
+.modal {
+    background-color: lightcyan;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    margin: 20px;
+}
+
+body.rtl .right {
+    text-align: left;
+    white-space: nowrap;
+}
+
+
+body.rtl .read-book img {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    max-height: 150px;
+    max-width: 150px;
+}
+body.rtl .book-ratings-in-modal {
+    right: auto;
+    left:20px;
+}
+
+body.rtl .book-ratings-in-modal div {
+    /* left:20px; */
+    right:auto;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -1,5 +1,5 @@
 'use strict';
-const currency = '&#8362;'; //₪
+// const currency = '&#8362;'; //₪
 var gSortBy,
     isModalOn = false,
     isAdmin = false;
@@ -25,6 +25,9 @@ function onInit() {
         generateAllDb();
         document.querySelector('[name="action-col"]').colSpan = '3';
     }
+
+    var lang = getLang();
+    if(lang) document.querySelector('[name="lang"]').value=lang;
 
     renderBooks();
     updatePagesNav();
@@ -79,12 +82,12 @@ function renderBooks() {
         <td class="narrow">${book.idx}</td>
         <td class="narrow">${book.id}</td>
         <td>${book.name}</td>
-        <td class="narrow">${book.price} ${currency}</td>
-        <td><button class="read btn" onclick="onReadBook('${book.id}')">Read</button></td>`;
+        <td class="narrow">${new Intl.NumberFormat(getLocale(),{style:'currency',currency:getOptions()}).format(book.price)}</td>
+        <td><button class="read btn" onclick="onReadBook('${book.id}')" data-dict="btn-read">Read</button></td>`;
 
             if (isAdmin)
-                htmlSTR += `<td><button class="update btn" onclick="onUpdateBook('${book.id}')">Update</button></td>
-        <td><button class="delete btn" onclick="onRemoveBook('${book.id}')">Delete</button></td>`;
+                htmlSTR += `<td><button class="update btn" onclick="onUpdateBook('${book.id}')" data-dict="btn-update">Update</button></td>
+        <td><button class="delete btn" onclick="onRemoveBook('${book.id}')" data-dict="btn-remove">Delete</button></td>`;
 
             htmlSTR += `<td class="narrow" onselectstart="return false;"><i class="material-icons-new outline-remove_circle" onclick="onRatings('${book.id}',-1,this)"></i>
         <div name="rating">${book.rating}</div>
@@ -95,6 +98,7 @@ function renderBooks() {
         .join('');
 
     document.querySelector('.books-table').innerHTML = htmlSTR;
+    setLang();
 }
 
 function onRemoveBook(bookId) {
@@ -153,6 +157,7 @@ function onAddBook() {
         }
         document.querySelector('[name=book-name]').removeAttribute('bookId');
     }
+    setLang();
 }
 
 function onUpdateBook(bookId) {
@@ -164,6 +169,9 @@ function onUpdateBook(bookId) {
 
     document.querySelector('[name=book-name]').setAttribute('bookId', bookId);
     doShowAddBookModal('Update a book', 'Update Book');
+    document.querySelector('.modal h4').dataset.dict='h4-update';
+    document.querySelector('.ok').dataset.dict = 'btn-save';
+    setLang();
     isModalOn = true;
 }
 
@@ -180,12 +188,12 @@ function onCloseReadBook() {
 
 function onReadBook(bookId) {
     var currBook = getBook(bookId);
-    var htmlSTR = `<label>ID: <span>${currBook.id}</span></label><br>
-            <label>Book name: <span>${currBook.name}</span></label><br>
-            <label>Book price: <span>${currBook.price} ${currency}</span></label><br>
+    var htmlSTR = `<label data-dict="tbl-ID">ID: </label><span> ${currBook.id}</span><br>
+            <label data-dict="lbl-book-name">Book name: </label> <span>${currBook.name}</span><br>
+            <label data-dict="lbl-book-price">Book price: </label> <span>${new Intl.NumberFormat(getLocale(),{style:'currency',currency:getOptions()}).format(currBook.price)}</span><br>
             <img class="book-img" src="${currBook.imgUrl}">
             <div class="book-ratings-in-modal">
-            <label>Ratings:</label><br>
+            <label data-dict="tbl-ratings">Ratings:</label><br>
             <i class="material-icons-new outline-remove_circle" onclick="onRatings('${currBook.id}',-1,this)"></i>
             <div name="rating">${currBook.rating}</div>
             <i class="material-icons-new outline-add_circle" onclick="onRatings('${currBook.id}',1,this)"></i>
@@ -194,6 +202,7 @@ function onReadBook(bookId) {
             <p>${currBook.desc}</p>`;
     //remember: the description (lorem) is not saved in DB. will be generated each click!
     document.querySelector('.book-details').innerHTML = htmlSTR;
+    setLang();
     document.querySelector('.read-screen-modal').style.display = 'block';
     document.querySelector('.read-screen-modal').classList.add('fade-in');
     isModalOn = true;
@@ -226,4 +235,17 @@ function onSort(sortBy) {
     if (gSortBy) document.querySelector('[data="' + gSortBy + '"]').classList.remove('hidden');
     setSortBy(sortBy);
     renderBooks();
+}
+
+function onLang(){
+    switch (document.querySelector('[name="lang"]').value){
+        case 'he':
+            document.querySelector('body').classList.add('rtl');
+            break;
+        case 'en':
+            document.querySelector('body').classList.remove('rtl');
+        break;
+    }
+    saveLang();
+    setLang();
 }

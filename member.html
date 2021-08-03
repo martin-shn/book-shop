@@ -16,6 +16,7 @@
             href="https://storage.googleapis.com/non-spec-apps/mio-icons/latest/outline.css"
         />
         <link rel="stylesheet" href="css/member.css" />
+        <link rel="stylesheet" href="css/member-rtl.css" />
         <title>Book Shop</title>
     </head>
 
@@ -25,19 +26,23 @@
             <h2>read & enjoy...</h2>
         </header>
         <nav class="right">
-            <button onclick="onAddBook()">Add a book</button>
-            <button class="admin-btn" onclick="onClearStorage()">Clear all storage</button>
-            <button onclick="logout()">Logout</button>
+            <select name="lang" class="langDropDown" onchange="onLang()">
+                <option value="he">עברית</option>
+                <option value="en" selected>English</option>
+            </select>
+            <button onclick="onAddBook()" data-dict="btn-add">Add a book</button>
+            <button class="admin-btn" onclick="onClearStorage()" data-dict="btn-clear-storage">Clear all storage</button>
+            <button onclick="logout()" data-dict="btn-logout">Logout</button>
         </nav>
         <div class="main">
             <table>
                 <thead>
                     <td class="clickable" onclick="onSort('idx')"><i data="idx" class="material-icons-new outline-sort hidden"></i>#</td>
-                    <td class="clickable" onclick="onSort('id')"><i data="id" class="material-icons-new outline-sort hidden"></i>ID</td>
-                    <td class="clickable" onclick="onSort('name')"><i data="name" class="material-icons-new outline-sort hidden"></i>Name</td>
-                    <td class="clickable" onclick="onSort('price')"><i data="price" class="material-icons-new outline-sort hidden"></i>Price</td>
-                    <td name="action-col" class="narrow" colspan="1"><i class="material-icons-new outline-sort hidden"></i>Actions</td>
-                    <td class="clickable" onclick="onSort('ratings')"><i data="ratings" class="material-icons-new outline-sort hidden"></i>Ratings</td>
+                    <td class="clickable" onclick="onSort('id')" data-dict="tbl-ID"><i data="id" class="material-icons-new outline-sort hidden"></i>ID</td>
+                    <td class="clickable" onclick="onSort('name')" data-dict="tbl-name"><i data="name" class="material-icons-new outline-sort hidden"></i>Name</td>
+                    <td class="clickable" onclick="onSort('price')" data-dict="tbl-price"><i data="price" class="material-icons-new outline-sort hidden"></i>Price</td>
+                    <td name="action-col" class="narrow" colspan="1" data-dict="tbl-actions"><i class="material-icons-new outline-sort hidden"></i>Actions</td>
+                    <td class="clickable" onclick="onSort('ratings')" data-dict="tbl-ratings"><i data="ratings" class="material-icons-new outline-sort hidden"></i>Ratings</td>
                 </thead>
                 <tbody class="books-table"></tbody>
             </table>
@@ -45,25 +50,25 @@
 
         <div class="main-screen-modal">
         <div class="modal add-new-book">
-            <h4>Add a new book</h4>
+            <h4 data-dict="h4-add-new-book">Add a new book</h4>
             <div class="right">
-            <label>Book name:</label><input type="text" name="book-name" placeholder="Type book name here..."><br>
-            <label>Price:</label><input type="number" name="book-price" placeholder="Price"><br>
-            <label>Description:</label><input type="text" name="book-desc" placeholder="Book description"><br>
-            <label>Image URL:</label><input type="url" name="book-img" placeholder="Type image URL or path">
+            <label data-dict="lbl-book-name">Book name:</label><input type="text" name="book-name" placeholder="Type book name here..." data-dict="ph-book-name"><br>
+            <label data-dict="lbl-book-price">Price:</label><input type="number" name="book-price" placeholder="Price" data-dict="ph-book-price"><br>
+            <label data-dict="lbl-book-desc">Description:</label><input type="text" name="book-desc" placeholder="Book description" data-dict="ph-book-desc"><br>
+            <label data-dict="lbl-img">Image URL:</label><input type="url" name="book-img" placeholder="Type image URL or path" data-dict="ph-book-img">
             </div>
-            <h6 class="wrong-input">Wrong inputs. try again...</h6>
-            <button class="cancel" onclick="onCancelAddBook()">Cancel</button>
-            <button class="ok" onclick="onAddBook()">Add this book</button>
+            <h6 class="wrong-input" data-dict="err-input">Wrong inputs. try again...</h6>
+            <button class="cancel" onclick="onCancelAddBook()" data-dict="btn-cancel">Cancel</button>
+            <button class="ok" onclick="onAddBook()" data-dict="btn-add-new">Add this book</button>
         </div>
         </div>
         <div class="read-screen-modal">
         <div class="modal read-book"  onselectstart="return false;">
-            <h4>Book details</h4>
+            <h4 data-dict="h4-details">Book details</h4>
             <div class="book-details">
             
             </div>
-            <button class="ok" onclick="onCloseReadBook()">Close</button>
+            <button class="ok" onclick="onCloseReadBook()" data-dict="btn-close">Close</button>
         </div>
         </div>
         <footer onselectstart="return false;">
@@ -76,6 +81,7 @@
                 <i class="material-icons-new outline-last_page" onclick="gotoPage('last')"></i>
             </nav>
         </footer>
+        <script src="js/dict.js"></script>
         <script src="js/utils.js"></script>
         <script src="js/storage-service.js"></script>
         <script src="js/admin-service.js"></script>
